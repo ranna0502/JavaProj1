@@ -263,3 +263,113 @@ class Person {
     System.out.println("合計" + Person.count + "人です");
   }
 }
+
+
+// セッター
+// セッターメソッドを作る
+
+class Person {
+  private static int count = 0;
+  private String firstName;
+  private String middleName;
+  private String lastName;
+  private int age;
+  private double height;
+  private double weight;
+
+  Person(String firstName, String lastName, int age, double height, double weight) {
+    Person.count++;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+    this.height = height;
+    this.weight = weight;
+  }
+
+  Person(String firstName, String middleName, String lastName, int age, double height, double weight) {
+    this(firstName, lastName, age, height, weight);
+    this.middleName = middleName;
+  }
+
+  public String getMiddleName() {
+    return this.middleName;
+  }
+
+  // middleNameフィールドのセッターを定義してください
+  public void setMiddleName(String middleName) {
+    this.middleName = middleName;
+  }
+
+  public String fullName() {
+    if (this.middleName == null) {
+      return this.firstName + " " + this.lastName;
+    } else {
+      return this.firstName + " " + this.middleName + " " + this.lastName;
+    }
+  }
+
+  public void printData() {
+    System.out.println("私の名前は" + this.fullName() + "です");
+    System.out.println("年齢は" + this.age + "歳です");
+    System.out.println("BMIは" + Math.round(this.bmi()) + "です");
+  }
+
+  public double bmi() {
+    return this.weight / this.height / this.height;
+  }
+
+  public static void printCount() {
+    System.out.println("合計" + Person.count + "人です");
+  }
+}
+
+
+class Main {
+  public static void main(String[] args) {
+    Person person1 = new Person("Kate", "Jones", 27, 1.6, 50.0);
+    person1.printData();
+    Person person2 = new Person("John", "Christopher", "Smith", 65, 1.75, 80.0);
+    person2.printData();
+
+    System.out.println("----------------------");
+    // person1のmiddleNameフィールドの値を「Claire」にしてください
+    person1.setMiddleName("Claire");
+    
+    System.out.println("ミドルネームを" + person1.getMiddleName() + "に変更しました");
+    person1.printData();
+  }
+}
+
+
+
+// オーバーライド（上書き）
+// スーパークラスからの継承
+// スーパークラスのインスタンスフィールドを使用する時はゲッター使用
+class Car extends Vehicle {
+  private int fuel = 50;
+
+  public int getFuel() {
+    return this.fuel;
+  }
+  
+  // printDataメソッドを定義してください
+  public void printData() {
+    System.out.println("名前：" + this.getName() );
+    System.out.println("色：" + this.getColor() );
+    System.out.println("走行距離：" + this.getDistance() + "km");
+    System.out.println("ガソリン量：" + this.fuel + "L");
+  }
+
+  public void charge(int litre) {
+    System.out.println(litre + "L給油します");
+    if (litre <= 0) {
+      System.out.println("給油できません");
+    } else if (litre + this.fuel >= 100) {
+      System.out.println("満タンまで給油します");
+      this.fuel = 100;
+    } else {
+      this.fuel += litre;
+    }
+    System.out.println("ガソリン量：" + this.fuel + "L");
+  }
+}
